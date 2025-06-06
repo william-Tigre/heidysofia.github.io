@@ -1,656 +1,925 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventas Heidy Sofia</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #6c757d;
-            background-image: radial-gradient(37.88% 68.62% at 50% 0, rgba(10, 233, 138, .3) 0, rgba(0, 124, 71, 0) 80%), 
-                              radial-gradient(0% 10% at 50% 0, rgba(10, 233, 138, .5) 0, rgba(0, 124, 71, .4) 90%, rgba(0, 124, 71, 0) 0), 
-                              radial-gradient(100% 28.09% at 100% 10%, rgba(10, 233, 138, .2) 0, rgba(0, 124, 71, .1) 80%, rgba(0, 124, 71, 0) 100%), 
-                              linear-gradient(180deg, rgba(0, 124, 71, .075) 35.79%, rgba(0, 124, 71, .05) 80%, #13161c), 
-                              radial-gradient(74.84% 135.56% at 100% 10%, rgba(0, 124, 71, .3) 0, #212529 80%);
-            background-repeat: no-repeat;
-            background-size: 150%;
-            min-height: 100vh;
-            overflow-x: hidden;
-            font-family: 'Lexend Deca', sans-serif;
-        }
-        .login-container {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .login-box {
-            background-color: rgba(30, 34, 41, 0.6);
-            padding: 40px;
-            border-radius: 10px;
-            color: #fff;
-            max-width: 450px;
-            width: 100%;
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-        .login-box input {
-            margin-bottom: 15px;
-        }
-        .login-box button {
-            width: 100%;
-        }
-        .container-custom {
-            display: none; 
-            padding: 20px;
-            border-radius: 10px;
-            color: #f8f9fac2; 
-            margin: 0 auto;
-            max-width: 1300px;
-            width: calc(100% - 60px);
-            background-color: rgba(30, 34, 41, 0.6);
-            backdrop-filter: blur(10px);
-            transition: background-color 0.3s ease;
-        }
-        .container-custom:hover {
-            background-color: rgba(30, 34, 41, 0.7);
-        }
-        .total-section {
-            background-color: rgba(30, 34, 41, 0.6);
-            color: #f8f9fac2;
-            padding: 15px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            width: 85%;
-            margin-left: auto;
-            transition: background-color 0.3s ease;
-        }
-        .total-section:hover {
-            background-color: rgba(30, 34, 41, 0.7);
-        }
-        .total-section h4 {
-            font-size: 1.5rem;
-            color: #f8f9fac2;
-            text-transform: uppercase;
-        }
-        .total-section p, #entrega {
-            font-size: 1.5rem;
-        }
-        .btn-custom {
-            margin-top: 20px;
-        }
-        .input-custom {
-            background-color: white;
-            color: black;
-        }
-        .input-producto {
-            margin-top: 20px;
-        }
-        table {
-            font-size: 0.9rem;
-            table-layout: fixed;
-            width: 100%;
-        }
-        th, td {
-            text-align: center;
-            vertical-align: middle;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        th {
-            font-weight: bold;
-        }
-        th:nth-child(1), td:nth-child(1) { width: 70px; }
-        th:nth-child(2), td:nth-child(2) { width: 140px; }
-        th:nth-child(3), td:nth-child(3) { width: 30px; }
-        th:nth-child(4), td:nth-child(4) { width: 60px; }
-        th:nth-child(5), td:nth-child(5) { width: 80px; }
-        th:nth-child(6), td:nth-child(6) { width: 85px; }
-        th:nth-child(7), td:nth-child(7) { width: 30px; }
-
-        .form-select {
-            font-size: 0.8rem;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
-        .btn-delete {
-            background-color: transparent;
-            border: none;
-            color: red;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        .btn-delete::before {
-            content: "\00D7";
-            font-size: 1.2rem;
-            color: red;
-        }
-        .btn-delete:hover::before {
-            color: darkred;
-        }
-
-        #local, #cliente, #precio {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        #precio, #local {
-            width: 50%;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #f8f9fac2;
-            text-transform: uppercase;
-        }
-        .navbar-custom {
-            display: none;
-            background-color: rgba(30, 34, 41, 0.6);
-            padding: 5px;
-            backdrop-filter: blur(10px);
-            transition: background-color 0.3s ease;
-        }
-        .navbar-custom:hover {
-            background-color: rgba(30, 34, 41, 0.7);
-        }
-        .navbar-custom .nav-link {
-            color: #f8f9fac2 !important;
-            font-weight: 300;
-            margin-right: 10px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
-        .navbar-custom .nav-link:hover {
-            text-decoration: underline;
-        }
-        .navbar-custom .navbar-toggler {
-            border: none;
-            color: white;
-        }
-        .navbar-toggler-icon {
-            background-color: white;
-        }
-
-        /* Flexbox styling for the right menu */
-        .navbar-nav.d-flex {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            align-items: center;
-            flex-wrap: nowrap; /* Prevent items from wrapping */
-        }
-
-        @media (max-width: 768px) {
-            .navbar-custom .navbar-collapse {
-                flex-grow: 0;
-            }
-            .navbar-custom .nav-item:first-child {
-                display: none;
-            }
-        }
-
-        /* Estilo para el título animado */
-        .title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #f8f9fac2;
-            margin: 10px 0;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Estilo para el popup de cargando */
-        .loading-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(30, 34, 41, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            color: #fff;
-            text-align: center;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <!-- Meta viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10, user-scalable=yes" />
+  <title>Ventas Heidy Sofia</title>
+  <!-- Tailwind CSS vía CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert2 CSS y JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Font Awesome (opcional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-dC2Q9YMKy4N8+h23PipTqA/p+qqZ1O8WJ7Bq4jIKxJXgOJhkU05YvH7DRlM+cBqtrPlT/d+0z30+J7Y5d4VxOg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Estilos globales y tipografía */
+    body {
+      font-family: 'Lexend Deca', sans-serif;
+      background-color: #f8fafc;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark {
+      background-color: #1e1e1e;
+      color: #e2e8f0;
+    }
+    
+    .uppercase { text-transform: uppercase; }
+    
+    /* Tarjetas: se restablece el padding original */
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      border-radius: 1rem;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+      padding: 1rem;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.25);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(45deg, rgba(255,0,128,0.7), rgba(121,40,202,0.7), rgba(46,182,125,0.7), rgba(255,191,0,0.7));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+              mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    body.dark .card { background: #2d3748; }
+    
+    /* Tarjeta de la tabla con padding de 1rem */
+    .card.table-card { padding: 1rem; }
+    
+    /* Sidebar */
+    .sidebar {
+      position: relative;
+      overflow: hidden;
+      background: #2d3748;
+      transition: transform 0.3s;
+      border-radius: 0;
+      padding: 1rem;
+    }
+    .sidebar::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 0;
+      padding: 1px;
+      background: linear-gradient(45deg, rgba(255,0,128,0.7), rgba(121,40,202,0.7),
+                  rgba(46,182,125,0.7), rgba(255,191,0,0.7));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+              mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    
+    /* Inputs y selects */
+    .input, .select {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid #ccc;
+      border-radius: 0.375rem;
+      transition: background 0.3s, border-color 0.3s;
+      max-width: 100%;
+    }
+    body.dark .input, body.dark .select {
+      background: #374151;
+      border-color: #4b5563;
+      color: #e2e8f0;
+    }
+    body.dark table input {
+      background-color: #374151;
+      border-color: #4b5563;
+      color: #e2e8f0;
+    }
+    
+    /* Botones */
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: background 0.3s, transform 0.2s;
+      font-size: 0.9rem;
+      max-width: 100%;
+    }
+    .btn:hover { transform: scale(1.02); }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #111;
+      border: 1px solid #ccc;
+    }
+    .btn-secondary:hover { background: #e5e7eb; }
+    body.dark .btn-secondary {
+      background: #374151;
+      color: #e2e8f0;
+      border-color: #4b5563;
+    }
+    #limpiar { background-color: #ef4444 !important; color: #fff !important; border: none !important; }
+    #limpiar:hover { background-color: #dc2626 !important; }
+    
+    /* Borde neón para botones */
+    .btn-neon {
+      position: relative;
+    }
+    .btn-neon::before {
+      content: "";
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(45deg, rgba(255,0,128,0.7), rgba(121,40,202,0.7),
+                  rgba(46,182,125,0.7), rgba(255,191,0,0.7));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+              mask-composite: exclude;
+      pointer-events: none;
+    }
+    
+    /* Header: Se reducen los márgenes para que coincidan con las tarjetas */
+    header {
+      margin-bottom: -1rem;
+      margin-top: -0.75rem
+    }
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+    }
+    .header-container > .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .header-container > .container {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.25rem;
+      }
+      .header-container h1 { 
+        font-size: 1.3rem;
+        margin: 0 0.25rem;
+        text-align: center;
+        flex: 1;
+      }
+      .header-container .left-btn, .header-container .right-btn {
+        position: static;
+        transform: none;
+      }
+    }
+    
+    #fechaHora {
+      text-align: right;
+      font-size: 1.1rem;
+      color: #333;
+      font-weight: bold;
+    }
+    body.dark #fechaHora { color: #e2e8f0; }
+    
+    /* Tabla */
+    table { min-width: 100%; table-layout: fixed; }
+    table thead { background-color: #e2e8f0; }
+    table thead th { font-weight: normal; }
+    body.dark table thead { background-color: #2d3748; }
+    table th, table td {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid #ccc;
+      word-wrap: break-word;
+    }
+    body.dark table th, body.dark table td { border-color: #4b5563; }
+    .foto-col { width: 100px; text-align: center; }
+    
+    /* Select con icono */
+    .select-container { position: relative; }
+    .check-icon {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: none;
+      color: #10b981;
+    }
+    
+    /* Botón de dark mode */
+    #darkModeToggle {
+      border-radius: 9999px;
+      padding: 0.5rem;
+      min-width: 3rem;
+      min-height: 3rem;
+    }
+    
+    /* Se mantiene el padding original en las tarjetas */
+    .card.reducida { padding: 0.75rem; }
+    
+    @media (max-width: 640px) {
+      .select { max-width: 80%; }
+    }
+    
+    .btn-danger {
+      background-color: #ef4444;
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+    
+    /* Main container con menos relleno para reducir espacios en la parte superior */
+    #mainContainer { padding: 1rem; }
+  </style>
 </head>
 <body>
+  <!-- PANTALLA DE LOGIN -->
+  <div id="loginContainer" class="flex items-center justify-center h-screen">
+    <div class="card p-8 w-80 text-center relative">
+      <button id="darkModeToggleLogin" class="btn btn-secondary btn-neon absolute top-2 right-2 rounded-full flex items-center justify-center" onclick="toggleDarkMode()">
+        <span class="material-icons" id="darkModeIconLogin">dark_mode</span>
+      </button>
+      <h2 class="text-2xl mb-4 font-semibold">Iniciar Sesión</h2>
+      <input type="text" id="username" placeholder="Usuario" class="input w-full mb-3 focus:outline-none" onkeydown="if(event.key==='Enter') login()">
+      <input type="password" id="password" placeholder="Contraseña" class="input w-full mb-3 focus:outline-none" onkeydown="if(event.key==='Enter') login()">
+      <button onclick="login()" class="btn btn-primary w-full">Ingresar</button>
+    </div>
+  </div>
 
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarIzquierdo" aria-controls="navbarIzquierdo" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+  <!-- APLICACIÓN (tras login) -->
+  <div id="appContainer" class="hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar hidden fixed inset-y-0 left-0 w-64 p-6 text-white flex flex-col">
+      <h2 class="text-2xl font-bold mb-8">Ventas</h2>
+      <nav>
+        <ul class="space-y-4">
+          <li><a href="#" class="uppercase hover:text-white">Ventas</a></li>
+          <li><a href="#" class="uppercase hover:text-white">Consulta</a></li>
+          <li><a href="#" class="uppercase hover:text-white">Devolución</a></li>
+          <li><a href="#" class="uppercase hover:text-white">Entrada</a></li>
+        </ul>
+      </nav>
+      <footer class="mt-auto">
+        <p id="nombreUsuario" class="font-semibold"></p>
+        <p id="cargoUsuario" class="text-sm"></p>
+        <button onclick="logout()" class="mt-4 btn btn-secondary w-full">
+          <span class="material-icons align-middle">logout</span>
+          Salir
+        </button>
+      </footer>
+    </aside>
+
+    <!-- Main container -->
+    <main id="mainContainer" class="ml-0 p-4 transition-all">
+      <!-- Header -->
+      <header class="mb-1 header-container">
+        <div class="container mx-auto px-4 flex items-center justify-between">
+          <button id="sidebarToggle" class="btn btn-secondary btn-neon rounded-full flex items-center justify-center" onclick="toggleSidebar()">
+            <span class="material-icons">menu</span>
+          </button>
+          <h1 class="text-xl md:text-4xl font-bold">Ventas Heidy Sofia</h1>
+          <button id="darkModeToggle" class="btn btn-secondary btn-neon rounded-full flex items-center justify-center" onclick="toggleDarkMode()">
+            <span class="material-icons" id="darkModeIcon">dark_mode</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Sección de tarjetas -->
+      <section class="grid md:grid-cols-2 gap-6 mb-6 items-stretch">
+        <!-- Tarjeta Detalles de la Venta -->
+        <div class="card reducida">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Detalles de la Venta</h2>
+            <p id="fechaHora">00-00-0000 / 00:00:00</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="precio" class="block uppercase text-sm font-medium mb-1 flex items-center">
+                Precio 
+                <span id="spinnerPrecio" class="material-icons animate-spin text-gray-500 text-base ml-2 hidden">autorenew</span>
+              </label>
+              <select id="precio" class="select w-full" onchange="actualizarPrecios()">
+                <option>PÚBLICO</option>
+                <option>MAYORISTA</option>
+              </select>
+            </div>
+            <div>
+              <label for="empleada" class="block uppercase text-sm font-medium mb-1">Empleada</label>
+              <select id="empleada" class="select w-full"></select>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <label for="local" class="block uppercase text-sm font-medium mb-1">Local</label>
+              <select id="local" class="select w-full">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="F">F</option>
+              </select>
+            </div>
+            <div class="select-container">
+              <label for="cliente" class="block uppercase text-sm font-medium mb-1">Cliente</label>
+              <select id="cliente" class="select w-full" onchange="updateCheck('cliente')">
+                <option value="" disabled selected>Seleccione</option>
+              </select>
+              <span id="checkCliente" class="check-icon material-icons" style="display: none;">check_circle</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="select-container">
+              <label for="globalPago" class="block uppercase text-sm font-medium mb-1">Método de Pago</label>
+              <select id="globalPago" class="select w-full" onchange="updateCheck('globalPago')">
+                <option value="" disabled selected>Seleccione</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Transferencia">Transferencia</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Cheque">Cheque</option>
+              </select>
+              <span id="checkGlobalPago" class="check-icon material-icons">check_circle</span>
+            </div>
+            <div class="select-container">
+              <label for="globalEstado" class="block uppercase text-sm font-medium mb-1">Estado</label>
+              <select id="globalEstado" class="select w-full" onchange="updateCheck('globalEstado')">
+                <option value="" disabled selected>Seleccione</option>
+                <option value="Cancelado">Cancelado</option>
+                <option value="Debe">Debe</option>
+              </select>
+              <span id="checkGlobalEstado" class="check-icon material-icons">check_circle</span>
+            </div>
+          </div>
+          <div class="mt-4">
+            <label for="comprobante" class="block uppercase text-sm font-medium mb-1">Comprobante N°</label>
+            <input type="text" id="comprobante" placeholder="Ingrese número de comprobante" class="input w-full">
+          </div>
+        </div>
+        <!-- Tarjeta Totales y Acciones -->
+        <div class="card reducida">
+          <h2 class="text-xl font-semibold mb-4">Totales y Acciones</h2>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="text-center">
+              <h3 class="uppercase text-sm font-medium">Total</h3>
+              <p id="total" class="text-2xl font-bold">$0.00</p>
+            </div>
+            <div>
+              <label for="entrega" class="block uppercase text-sm font-medium mb-1 text-center">
+                <span class="material-icons align-middle text-base">attach_money</span> Entrega
+              </label>
+              <input type="text" id="entrega" placeholder="$0,00" class="input w-full text-center text-2xl font-bold" oninput="calcularCambio()">
+            </div>
+            <div class="text-center">
+              <h3 class="uppercase text-sm font-medium">Cambio</h3>
+              <p id="cambio" class="text-2xl font-bold">$0.00</p>
+            </div>
+            <div class="text-center">
+              <h3 class="uppercase text-sm font-medium">Pares</h3>
+              <p id="totalPares" class="text-2xl font-bold">0</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <button id="vender" onclick="vender()" class="btn btn-primary w-full">
+              <span class="material-icons align-middle">shopping_cart</span>
+              VENDER
             </button>
-            <div class="collapse navbar-collapse" id="navbarIzquierdo">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">VENTAS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">CONSULTA</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">DEVOLUCIÓN</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">ENTRADA</a>
-                    </li>
-                </ul>
-            </div>
-            <ul class="navbar-nav d-flex">
-                <li class="nav-item">
-                    <span class="nav-link" id="nombreUsuario"></span>
-                </li>
-                <li class="nav-item">
-                    <span class="nav-link" id="cargoUsuario"></span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="logout()">Salir</a>
-                </li>
-            </ul>
+            <button id="limpiar" onclick="limpiar()" class="btn w-full">
+              <span class="material-icons align-middle">cleaning_services</span>
+              LIMPIAR
+            </button>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-4">
+            <input type="text" id="nuevoProducto" placeholder="Ingrese ID de Producto" class="input w-full" onkeydown="if(event.key==='Enter') agregarProducto()">
+            <button onclick="agregarProducto()" class="btn btn-primary w-full">
+              <span class="material-icons align-middle">add_circle</span>
+              AGREGAR PRODUCTO
+            </button>
+          </div>
         </div>
-    </nav>
+      </section>
 
-    <div class="title">Ventas Heidy Sofia</div>
-
-    <div class="login-container">
-        <div class="login-box">
-            <h2>Iniciar Sesión</h2>
-            <input type="text" id="username" class="form-control" placeholder="Usuario" required onkeydown="if(event.key === 'Enter') login()">
-            <input type="password" id="password" class="form-control" placeholder="Contraseña" required onkeydown="if(event.key === 'Enter') login()">
-            <button class="btn btn-primary" onclick="login()">Ingresar</button>
-        </div>
-    </div>
-
-    <div class="overlay" id="overlay"></div>
-
-    <div class="loading-popup" id="loadingPopup">
-        <div class="spinner"></div>
-        <p>Procesando venta...</p>
-    </div>
-
-    <div class="container mt-5 container-custom">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <label for="precio" class="form-label">Precio</label>
-                    <select id="precio" class="form-select input-custom">
-                        <option>PÚBLICO</option>
-                        <option>MAYORISTA</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="local" class="form-label">LOCAL DE VENTA</label>
-                    <select id="local" class="form-select input-custom">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="cliente" class="form-label">Cliente</label>
-                    <select id="cliente" class="form-select input-custom"></select>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="total-section text-center">
-                    <div class="row">
-                        <div class="col">
-                            <h4>Total</h4>
-                            <p id="total">$0.00</p>
-                        </div>
-                        <div class="col">
-                            <h4>Entrega</h4>
-                            <input type="text" id="entrega" class="form-control input-custom" value="" oninput="calcularCambio()">
-                        </div>
-                        <div class="col">
-                            <h4>Cambio</h4>
-                            <p id="cambio" class="cambio-text">$0.00</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <button class="btn btn-warning w-100 btn-custom" id="limpiar" onclick="limpiar()">LIMPIAR</button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-success w-100 btn-custom" id="vender" onclick="vender()">VENDER</button>
-                        </div>
-                    </div>
-                    <div class="row input-producto">
-                        <div class="col-8">
-                            <input type="text" id="nuevoProducto" class="form-control" placeholder="Ingrese ID de Producto" onkeydown="if(event.key === 'Enter') agregarProducto()">
-                        </div>
-                        <div class="col-4">
-                            <button class="btn btn-primary w-100" onclick="agregarProducto()">Agregar Producto</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <table class="table table-bordered table-striped mt-4">
-            <thead>
-                <tr>
-                    <th>ID Producto</th>
-                    <th>Producto</th>
-                    <th>Talla</th>
-                    <th>Precio</th>
-                    <th>Pago</th>
-                    <th>Estado</th>
-                    <th></th> <!-- Columna para el botón de eliminar -->
-                </tr>
+      <!-- Tarjeta de la Tabla de Productos -->
+      <div class="card table-card">
+        <h2 class="text-xl font-semibold mb-4">Productos Agregados</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-center text-xs md:text-sm" style="table-layout: fixed;">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="px-2 py-1 md:px-4 md:py-2 border whitespace-normal">ID Producto</th>
+                <th class="px-2 py-1 md:px-4 md:py-2 border whitespace-normal">Producto</th>
+                <th class="px-2 py-1 md:px-4 md:py-2 border whitespace-normal">Talla</th>
+                <th class="px-2 py-1 md:px-4 md:py-2 border whitespace-normal" style="width: 130px;">Precio</th>
+                <th class="px-2 py-1 md:px-4 md:py-2 border whitespace-normal foto-col">Foto</th>
+                <th class="px-2 py-1 md:px-4 md:py-2 border whitespace-normal">Accion</th>
+              </tr>
             </thead>
-            <tbody id="productos">
-                <!-- Filas se agregarán dinámicamente -->
+            <tbody id="productos" class="divide-y">
+              <!-- Filas generadas dinámicamente -->
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50"></div>
+  <div id="loadingPopup" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <div class="card p-4 rounded-lg text-center">
+      <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+      <p>Procesando venta...</p>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function login() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-
-            if (!username || !password) {
-                alert('Por favor, complete todos los campos.');
-                return;
-            }
-
-            google.script.run.withSuccessHandler(function(user) {
-                if (user) {
-                    document.querySelector('.login-container').style.display = 'none';
-                    document.querySelector('.container-custom').style.display = 'block';
-                    document.querySelector('.navbar-custom').style.display = 'flex'; 
-                    
-                    document.getElementById('nombreUsuario').innerText = user.nombre;
-                    document.getElementById('cargoUsuario').innerText = user.cargo;
-
-                    google.script.run.setEmpleadoLogueado(user.nombre);
-
-                    var popup = document.createElement('div');
-                    popup.innerText = `¡Bienvenido, ${user.nombre}!`;
-                    popup.style.position = 'fixed';
-                    popup.style.top = '50%';
-                    popup.style.left = '50%';
-                    popup.style.transform = 'translate(-50%, -50%)';
-                    popup.style.padding = '20px';
-                    popup.style.backgroundColor = '#198754';
-                    popup.style.color = 'white';
-                    popup.style.borderRadius = '10px';
-                    popup.style.textAlign = 'center';
-                    document.body.appendChild(popup);
-
-                    setTimeout(function() {
-                        popup.style.display = 'none';
-                    }, 1500);
-                    
-                    cargarClientes(); 
-                } else {
-                    alert('Usuario o contraseña incorrectos.');
+  </div>
+  <div id="popupError" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <div class="card p-4 rounded-lg text-center border border-red-500">
+      <p class="text-red-500 font-semibold">Error: El producto no tiene un precio válido.</p>
+      <button onclick="cerrarPopupError()" class="mt-3 btn btn-primary">Cerrar</button>
+    </div>
+  </div>
+  <script>
+    function disableZoom() {
+      var viewportmeta = document.querySelector('meta[name="viewport"]');
+      if (viewportmeta) { viewportmeta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"); }
+    }
+    function restoreZoom() {
+      var viewportmeta = document.querySelector('meta[name="viewport"]');
+      if (viewportmeta) { viewportmeta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=10, user-scalable=yes"); }
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('input, textarea, select').forEach(function(el) {
+        el.addEventListener("focus", disableZoom);
+        el.addEventListener("blur", restoreZoom);
+      });
+    });
+    
+    if (!window.google || !google.script || !google.script.run) {
+      window.google = {
+        script: {
+          run: {
+            withSuccessHandler: function(callback) {
+              return {
+                login: function(username, password) {
+                  setTimeout(function() { callback({ nombre: "Usuario de Prueba", cargo: "Admin" }); }, 1000);
+                },
+                setEmpleadoLogueado: function() {},
+                cargarEmpleadas: function() {
+                  setTimeout(function() { callback(["Empleada 1", "Empleada 2"]); }, 500);
+                },
+                obtenerClientes: function() {
+                  setTimeout(function() { callback(["Cliente 1", "Cliente 2"]); }, 500);
+                },
+                buscarProducto: function(id) {
+                  setTimeout(function() {
+                    callback({ nombre: "Producto " + id, talla: "M", precioPublico: 10, precioMayorista: 8 });
+                  }, 500);
+                },
+                buscarImagenProducto: function(productName) {
+                  setTimeout(function() { callback("https://via.placeholder.com/150"); }, 500);
+                },
+                buscarProductos: function(ids) {
+                  var result = {};
+                  ids.forEach(function(id) {
+                    result[id] = { nombre: "Producto " + id, talla: "M", precioPublico: 10, precioMayorista: 8 };
+                  });
+                  setTimeout(function() { callback(result); }, 500);
                 }
-            }).login(username, password);
+              };
+            }
+          }
         }
-
-        function logout() {
-            document.querySelector('.container-custom').style.display = 'none';
-            document.querySelector('.navbar-custom').style.display = 'none'; 
-            document.querySelector('.login-container').style.display = 'flex'; 
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
+      };
+    }
+    
+    function convertDriveUrl(url) {
+      if (!url) return url;
+      if (url.indexOf("drive.usercontent") !== -1) {
+        try {
+          const urlObj = new URL(url);
+          const fileId = urlObj.searchParams.get("id");
+          if (fileId) { return "https://drive.google.com/thumbnail?sz=w600&id=" + fileId; }
+        } catch(e) { return url; }
+      }
+      const regex = /\/file\/d\/([^\/]+)\//;
+      const match = url.match(regex);
+      if (match && match[1]) { return "https://drive.google.com/thumbnail?sz=w600&id=" + match[1]; }
+      return url;
+    }
+    
+    function showProductModal(productName, btn) {
+      var spinner = document.createElement('span');
+      spinner.className = "material-icons animate-spin text-gray-500 text-base mx-auto mt-1";
+      spinner.textContent = "autorenew";
+      btn.appendChild(spinner);
+      google.script.run.withSuccessHandler(function(imageUrl) {
+        btn.removeChild(spinner);
+        const finalUrl = imageUrl ? convertDriveUrl(imageUrl) : null;
+        if (finalUrl) {
+          Swal.fire({ imageUrl: finalUrl, imageAlt: 'Imagen del producto', showCloseButton: true, showConfirmButton: false });
+        } else {
+          Swal.fire({ icon: 'info', title: 'Sin imagen', text: 'Este producto no tiene imagen.' });
         }
-
-        function cargarClientes() {
-            google.script.run.withSuccessHandler(function(clientes) {
-                var clienteSelect = document.getElementById('cliente');
-                clienteSelect.innerHTML = ''; 
-                clientes.forEach(function(cliente) {
-                    var option = document.createElement('option');
-                    option.text = cliente;
-                    clienteSelect.add(option);
-                });
-            }).obtenerClientes();
-        }
-
-        function limpiar() {
-            document.getElementById('productos').innerHTML = ''; 
-            document.getElementById('total').innerText = '$0.00';
-            document.getElementById('cambio').innerText = '$0.00';
-            document.getElementById('entrega').value = '';
-            document.getElementById('cambio').classList.remove('text-danger'); 
-        }
-
-        function vender() {
-            mostrarLoading();
-            document.getElementById('overlay').style.display = 'block'; 
-
-            var local = document.getElementById('local').value;
-            var cliente = document.getElementById('cliente').value;
-            var filasProductos = document.querySelectorAll('#productos tr');
-            var datosVenta = [];
-
-            filasProductos.forEach(function(fila) {
-                var idProducto = fila.querySelector('td:nth-child(1)').innerText;
-                var filaDatos = [
-                    fila.querySelector('td:nth-child(2)').innerText, 
-                    fila.querySelector('td:nth-child(3)').innerText, 
-                    parseFloat(fila.querySelector('td:nth-child(4) input').value), 
-                    fila.querySelector('td:nth-child(5) select').value, 
-                    fila.querySelector('td:nth-child(6) select').value 
-                ];
-                datosVenta.push({ idProducto: idProducto, filaDatos: filaDatos });
-            });
-
-            setTimeout(function() {
-                google.script.run.withSuccessHandler(function(response) {
-                    ocultarLoading(); 
-                    document.getElementById('overlay').style.display = 'none'; 
-
-                    if (response.success) {
-                        var successPopup = document.createElement('div');
-                        successPopup.innerText = 'Venta realizada correctamente';
-                        successPopup.style.position = 'fixed';
-                        successPopup.style.top = '50%';
-                        successPopup.style.left = '50%';
-                        successPopup.style.transform = 'translate(-50%, -50%)';
-                        successPopup.style.padding = '20px';
-                        successPopup.style.backgroundColor = '#198754';
-                        successPopup.style.color = 'white';
-                        successPopup.style.borderRadius = '10px';
-                        successPopup.style.textAlign = 'center';
-                        document.body.appendChild(successPopup);
-
-                        setTimeout(function() {
-                            successPopup.style.display = 'none';
-                            limpiar(); 
-                        }, 1500);
-                    } else {
-                        alert('Error: ' + response.message);
-                    }
-                }).registrarVentaWebApp(datosVenta, local, cliente);
-            }, 100);
-        }
-
-        function mostrarLoading() {
-            document.getElementById('loadingPopup').style.display = 'block';
-        }
-
-        function ocultarLoading() {
-            document.getElementById('loadingPopup').style.display = 'none';
-        }
-
-        function agregarProducto() {
-            const idProducto = document.getElementById('nuevoProducto').value;
+      }).buscarImagenProducto(productName);
+    }
+    
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const mainContainer = document.getElementById('mainContainer');
+      sidebar.classList.toggle('hidden');
+      if (sidebar.classList.contains('hidden')) {
+        mainContainer.classList.remove('ml-64');
+        mainContainer.classList.add('ml-0');
+      } else {
+        mainContainer.classList.remove('ml-0');
+        mainContainer.classList.add('ml-64');
+      }
+    }
+    
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const iconHeader = document.getElementById('darkModeIcon');
+      const iconLogin = document.getElementById('darkModeIconLogin');
+      if (document.body.classList.contains('dark')) {
+        if (iconHeader) iconHeader.textContent = 'light_mode';
+        if (iconLogin) iconLogin.textContent = 'light_mode';
+      } else {
+        if (iconHeader) iconHeader.textContent = 'dark_mode';
+        if (iconLogin) iconLogin.textContent = 'dark_mode';
+      }
+    }
+    
+    function updateCheck(id) {
+      const selectElem = document.getElementById(id);
+      const checkElem = document.getElementById('check' + id.charAt(0).toUpperCase() + id.slice(1));
+      checkElem.style.display = selectElem.value !== "" ? "block" : "none";
+    }
+    
+    function actualizarEstadoColor() {
+      var estadoSelect = document.getElementById('globalEstado');
+      if (estadoSelect.value === "Cancelado") {
+        estadoSelect.classList.remove('bg-red-600');
+        estadoSelect.classList.add('bg-green-600');
+      } else if (estadoSelect.value === "Debe") {
+        estadoSelect.classList.remove('bg-green-600');
+        estadoSelect.classList.add('bg-red-600');
+      }
+    }
+    
+    function login() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      if (!username || !password) { alert('Por favor, complete todos los campos.'); return; }
+      google.script.run.withSuccessHandler(function(user) {
+        if (user) {
+          document.getElementById('loginContainer').classList.add('hidden');
+          document.getElementById('appContainer').classList.remove('hidden');
+          if (window.innerWidth >= 768) {
+            document.getElementById('sidebar').classList.remove('hidden');
+            document.getElementById('mainContainer').classList.remove('ml-0');
+            document.getElementById('mainContainer').classList.add('ml-64');
+          } else {
+            document.getElementById('sidebar').classList.add('hidden');
+            document.getElementById('mainContainer').classList.remove('ml-64');
+            document.getElementById('mainContainer').classList.add('ml-0');
+          }
+          document.getElementById('nombreUsuario').innerText = user.nombre;
+          document.getElementById('cargoUsuario').innerText = user.cargo;
+          google.script.run.setEmpleadoLogueado(user.nombre);
+          cargarEmpleadas(user.nombre);
+          actualizarFechaHora();
+          cargarClientes();
+          sendHeight();
+        } else { alert('Usuario o contraseña incorrectos.'); }
+      }).login(username, password);
+    }
+    
+    function logout() {
+      document.getElementById('appContainer').classList.add('hidden');
+      document.getElementById('loginContainer').classList.remove('hidden');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+    
+    function cargarClientes() {
+      google.script.run.withSuccessHandler(function(clientes) {
+        var clienteSelect = document.getElementById('cliente');
+        clienteSelect.innerHTML = '<option value="" disabled selected>Seleccione</option>';
+        clientes.forEach(function(cliente) {
+          var option = document.createElement('option');
+          option.value = cliente;
+          option.text = cliente;
+          clienteSelect.add(option);
+        });
+      }).obtenerClientes();
+    }
+    
+    function cargarEmpleadas(empleadaLogueada) {
+      google.script.run.withSuccessHandler(function(empleadas) {
+        var empleadaSelect = document.getElementById('empleada');
+        empleadaSelect.innerHTML = '';
+        empleadas.forEach(function(empleada) {
+          var option = document.createElement('option');
+          option.text = empleada;
+          empleadaSelect.add(option);
+        });
+        empleadaSelect.value = empleadaLogueada;
+      }).cargarEmpleadas();
+    }
+    
+    function actualizarFechaHora() {
+      setInterval(function() {
+        var fechaActual = new Date();
+        var opcionesFecha = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        var opcionesHora = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        var fecha = fechaActual.toLocaleDateString('es-ES', opcionesFecha).replace(/\//g, '-');
+        var hora = fechaActual.toLocaleTimeString('es-ES', opcionesHora);
+        document.getElementById('fechaHora').innerText = `${fecha} / ${hora}`;
+      }, 1000);
+    }
+    
+    function limpiar() {
+      document.getElementById('productos').innerHTML = '';
+      document.getElementById('total').innerText = '$0.00';
+      document.getElementById('cambio').innerText = '$0.00';
+      document.getElementById('totalPares').innerText = '0';
+      document.getElementById('entrega').value = '';
+      document.getElementById('comprobante').value = "";
+      document.getElementById('globalPago').value = "";
+      document.getElementById('globalEstado').value = "";
+      document.getElementById('checkGlobalPago').style.display = "none";
+      document.getElementById('checkGlobalEstado').style.display = "none";
+      document.getElementById('cliente').selectedIndex = 0;
+      updateCheck('cliente');
+      actualizarEstadoColor();
+      document.getElementById('cambio').classList.remove('text-red-500', 'text-green-500');
+    }
+    
+    function vender() {
+      const filas = document.querySelectorAll('#productos tr');
+      if (filas.length === 0) { alert("Agregue al menos un producto."); return; }
+      for (let i = 0; i < filas.length; i++) {
+        const producto = filas[i].querySelector('td:nth-child(2)').innerText;
+        if (producto === "Cargando...") { alert("Uno o más productos se están cargando, espere a que terminen de cargarse."); return; }
+      }
+      const globalPago = document.getElementById('globalPago').value;
+      const globalEstado = document.getElementById('globalEstado').value;
+      if (!globalPago || !globalEstado) { alert("Debe seleccionar método de pago y estado."); return; }
+      if(document.getElementById('cliente').value === "") { alert("Debe seleccionar un cliente."); return; }
+      mostrarLoading();
+      document.getElementById('overlay').classList.remove('hidden');
+      var local = document.getElementById('local').value;
+      var cliente = document.getElementById('cliente').value;
+      var empleada = document.getElementById('empleada').value;
+      var comprobante = document.getElementById('comprobante').value;
+      var filasProductos = document.querySelectorAll('#productos tr');
+      var datosVenta = [];
+      filasProductos.forEach(function(fila) {
+        var idProducto = fila.querySelector('td:nth-child(1)').innerText;
+        var filaDatos = [
+          fila.querySelector('td:nth-child(2)').innerText,
+          fila.querySelector('td:nth-child(3)').innerText,
+          parseFloat(fila.querySelector('td:nth-child(4) input').value)
+        ];
+        datosVenta.push({ idProducto: idProducto, filaDatos: filaDatos, pago: globalPago, estado: globalEstado, comprobante: comprobante });
+      });
+      setTimeout(function() {
+        google.script.run.withSuccessHandler(function(response) {
+          ocultarLoading();
+          document.getElementById('overlay').classList.add('hidden');
+          if (response.success) {
+            var successPopup = document.createElement('div');
+            successPopup.innerText = 'Venta registrada correctamente';
+            successPopup.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-700 text-white p-3 rounded';
+            document.body.appendChild(successPopup);
+            setTimeout(function() { successPopup.style.display = 'none'; limpiar(); }, 1500);
+          } else { alert('Error: ' + response.message); }
+        }).registrarVentaWebApp(datosVenta, local, cliente, empleada);
+      }, 100);
+    }
+    
+    function mostrarLoading() {
+      document.getElementById('loadingPopup').classList.remove('hidden');
+    }
+    
+    function ocultarLoading() {
+      document.getElementById('loadingPopup').classList.add('hidden');
+    }
+    
+    let pendingProducts = [];
+    let productDebounceTimer = null;
+    let priceDebounceTimer = null;
+    
+    function processPendingProducts() {
+      const groups = {};
+      pendingProducts.forEach(item => {
+        if (!groups[item.idProducto]) { groups[item.idProducto] = []; }
+        groups[item.idProducto].push(item);
+      });
+      const uniqueIds = Object.keys(groups);
+      pendingProducts = [];
+      google.script.run.withSuccessHandler(function(result) {
+        uniqueIds.forEach(function(idProducto) {
+          var producto = result[idProducto];
+          groups[idProducto].forEach(function(item) {
+            if (producto) {
+              item.tdNombre.innerText = producto.nombre;
+              item.tdTalla.innerText = producto.talla;
+              const precio = item.tipoPrecio === 'PÚBLICO' ? producto.precioPublico : producto.precioMayorista;
+              item.inputPrecio.value = precio ? precio.toFixed(2) : '0.00';
+              item.inputPrecio.disabled = false;
+              actualizarTotal();
+              item.btnVerImagen.disabled = false;
+            } else {
+              item.tr.remove();
+              actualizarTotalPares();
+            }
+          });
+        });
+        productDebounceTimer = null;
+      }).buscarProductos(uniqueIds);
+    }
+    
+    function processPriceUpdate() {
+      const filas = document.querySelectorAll('#productos tr');
+      const groups = {};
+      filas.forEach(function(fila) {
+        const idProducto = fila.querySelector('td:nth-child(1)').innerText;
+        if (!groups[idProducto]) { groups[idProducto] = []; }
+        groups[idProducto].push(fila);
+      });
+      const uniqueIds = Object.keys(groups);
+      google.script.run.withSuccessHandler(function(result) {
+        uniqueIds.forEach(function(idProducto) {
+          var producto = result[idProducto];
+          groups[idProducto].forEach(function(fila) {
+            const inputPrecio = fila.querySelector('td:nth-child(4) input');
             const tipoPrecio = document.getElementById('precio').value;
-
-            if (idProducto && !esDuplicado(idProducto)) {
-                document.getElementById('nuevoProducto').disabled = true; // Desactivar el input para prevenir duplicados rápidos
-
-                google.script.run.withSuccessHandler(function(producto) {
-                    document.getElementById('nuevoProducto').disabled = false; // Reactivar el input
-
-                    if (producto) {
-                        const tbody = document.getElementById('productos');
-                        const tr = document.createElement('tr');
-
-                        const tdID = document.createElement('td');
-                        tdID.innerText = idProducto;
-                        tr.appendChild(tdID);
-
-                        const tdNombre = document.createElement('td');
-                        tdNombre.innerText = producto.nombre;
-                        tr.appendChild(tdNombre);
-
-                        const tdTalla = document.createElement('td');
-                        tdTalla.innerText = producto.talla;
-                        tr.appendChild(tdTalla);
-
-                        const tdPrecio = document.createElement('td');
-                        const inputPrecio = document.createElement('input');
-                        const precio = tipoPrecio === 'PÚBLICO' ? producto.precioPublico : producto.precioMayorista;
-                        inputPrecio.type = 'number';
-                        inputPrecio.className = 'form-control';
-                        inputPrecio.value = precio.toFixed(2);
-                        inputPrecio.oninput = function() {
-                            actualizarTotal();
-                        };
-                        tdPrecio.appendChild(inputPrecio);
-                        tr.appendChild(tdPrecio);
-
-                        const tdMetodoPago = document.createElement('td');
-                        const metodoPagoSelect = document.createElement('select');
-                        metodoPagoSelect.className = 'form-select';
-                        metodoPagoSelect.style.textAlignLast = 'center';
-                        ['Efectivo', 'Transferencia', 'Tarjeta', 'Cheque'].forEach(function(metodo) {
-                            const option = document.createElement('option');
-                            option.text = metodo;
-                            metodoPagoSelect.add(option);
-                        });
-                        tdMetodoPago.appendChild(metodoPagoSelect);
-                        tr.appendChild(tdMetodoPago);
-
-                        const tdEstadoPago = document.createElement('td');
-                        const estadoPagoSelect = document.createElement('select');
-                        estadoPagoSelect.className = 'form-select';
-                        estadoPagoSelect.style.textAlignLast = 'center';
-                        ['Cancelado', 'Debe'].forEach(function(estado) {
-                            const option = document.createElement('option');
-                            option.text = estado;
-                            estadoPagoSelect.add(option);
-                        });
-                        tdEstadoPago.appendChild(estadoPagoSelect);
-                        tr.appendChild(tdEstadoPago);
-
-                        const tdEliminar = document.createElement('td');
-                        const btnEliminar = document.createElement('button');
-                        btnEliminar.className = 'btn-delete';
-                        btnEliminar.onclick = function() {
-                            tr.remove();
-                            actualizarTotal();
-                        };
-                        tdEliminar.appendChild(btnEliminar);
-                        tr.appendChild(tdEliminar);
-
-                        tbody.appendChild(tr);
-
-                        actualizarTotal();
-
-                        document.getElementById('nuevoProducto').value = '';
-                    } else {
-                        alert('El producto no existe en el inventario.');
-                    }
-                }).buscarProducto(idProducto);
-            } else {
-                if (!idProducto) {
-                    alert("Por favor, ingrese un ID de producto válido.");
-                } else {
-                    alert("El producto ya está agregado.");
-                }
-            }
+            const nuevoPrecio = tipoPrecio === 'PÚBLICO' ? (producto ? producto.precioPublico : 0) : (producto ? producto.precioMayorista : 0);
+            inputPrecio.value = nuevoPrecio ? nuevoPrecio.toFixed(2) : '0.00';
+            actualizarTotal();
+          });
+        });
+        priceDebounceTimer = null;
+        document.getElementById('spinnerPrecio').classList.add('hidden');
+      }).buscarProductos(uniqueIds);
+    }
+    
+    function agregarProducto() {
+      const inputElem = document.getElementById('nuevoProducto');
+      const rawValue = inputElem.value.trim();
+      if (!rawValue) { inputElem.focus(); return; }
+      const tokens = rawValue.split(/\s+/);
+      tokens.forEach(function(idProducto) {
+        if (idProducto && !esDuplicado(idProducto)) {
+          const tipoPrecio = document.getElementById('precio').value;
+          const tbody = document.getElementById('productos');
+          const tr = document.createElement('tr');
+          const tdID = document.createElement('td');
+          tdID.className = "border px-2 py-1 text-xs md:text-sm";
+          tdID.innerText = idProducto;
+          tr.appendChild(tdID);
+          const tdNombre = document.createElement('td');
+          tdNombre.className = "border px-2 py-1 text-xs md:text-sm whitespace-normal";
+          tdNombre.innerText = 'Cargando...';
+          tr.appendChild(tdNombre);
+          const tdTalla = document.createElement('td');
+          tdTalla.className = "border px-2 py-1 text-xs md:text-sm";
+          tdTalla.innerText = 'Cargando...';
+          tr.appendChild(tdTalla);
+          const tdPrecio = document.createElement('td');
+          tdPrecio.className = "border px-2 py-1 text-xs md:text-sm";
+          const inputPrecio = document.createElement('input');
+          inputPrecio.type = 'number';
+          inputPrecio.className = 'w-full rounded border px-1 py-1 text-xs md:text-sm';
+          inputPrecio.value = '';
+          inputPrecio.disabled = true;
+          inputPrecio.oninput = function() { actualizarTotal(); };
+          tdPrecio.appendChild(inputPrecio);
+          tr.appendChild(tdPrecio);
+          const tdFoto = document.createElement('td');
+          tdFoto.className = "border px-2 py-1 text-xs md:text-sm foto-col";
+          const btnVerImagen = document.createElement('button');
+          btnVerImagen.className = "btn btn-secondary p-1 w-full text-xs md:text-sm";
+          btnVerImagen.innerHTML = '<span class="material-icons">zoom_in</span>';
+          btnVerImagen.disabled = true;
+          btnVerImagen.onclick = function() { showProductModal(tdNombre.innerText, this); };
+          tdFoto.appendChild(btnVerImagen);
+          tr.appendChild(tdFoto);
+          const tdAcciones = document.createElement('td');
+          tdAcciones.className = "border px-2 py-1 text-xs md:text-sm";
+          const btnEliminar = document.createElement('button');
+          btnEliminar.className = "btn btn-danger bg-red-500 text-white p-1 w-full text-xs md:text-sm";
+          btnEliminar.innerHTML = '<span class="material-icons">delete</span>';
+          btnEliminar.onclick = function() {
+            tr.remove();
+            actualizarTotal();
+            actualizarTotalPares();
+          };
+          tdAcciones.appendChild(btnEliminar);
+          tr.appendChild(tdAcciones);
+          tbody.appendChild(tr);
+          actualizarTotalPares();
+          pendingProducts.push({ idProducto: idProducto, tipoPrecio: tipoPrecio, tr: tr, tdNombre: tdNombre, tdTalla: tdTalla, inputPrecio: inputPrecio, btnVerImagen: btnVerImagen });
+          if (productDebounceTimer) clearTimeout(productDebounceTimer);
+          productDebounceTimer = setTimeout(processPendingProducts, 800);
         }
-
-        function esDuplicado(idProducto) {
-            const filas = document.querySelectorAll('#productos tr');
-            for (let i = 0; i < filas.length; i++) {
-                const idExistente = filas[i].querySelector('td:nth-child(1)').innerText;
-                if (idExistente === idProducto) {
-                    return true;
-                }
-            }
-            return false;
+      });
+      inputElem.value = '';
+      inputElem.focus();
+    }
+    
+    function actualizarPrecios() {
+      document.getElementById('spinnerPrecio').classList.remove('hidden');
+      if (priceDebounceTimer) clearTimeout(priceDebounceTimer);
+      priceDebounceTimer = setTimeout(processPriceUpdate, 800);
+    }
+    
+    function esDuplicado(idProducto) {
+      const filas = document.querySelectorAll('#productos tr');
+      for (let i = 0; i < filas.length; i++) {
+        const idExistente = filas[i].querySelector('td:nth-child(1)').innerText;
+        if (idExistente === idProducto) { return true; }
+      }
+      return false;
+    }
+    
+    function actualizarTotal() {
+      const filas = document.querySelectorAll('#productos tr');
+      let total = 0;
+      filas.forEach(function(fila) {
+        const precio = parseFloat(fila.querySelector('td:nth-child(4) input').value);
+        total += precio || 0;
+      });
+      document.getElementById('total').innerText = `$${total.toFixed(2)}`;
+      calcularCambio();
+    }
+    
+    function actualizarTotalPares() {
+      const filas = document.querySelectorAll('#productos tr').length;
+      document.getElementById('totalPares').innerText = filas;
+    }
+    
+    function calcularCambio() {
+      const total = parseFloat(document.getElementById('total').innerText.replace('$', '')) || 0;
+      const entrega = parseFloat(document.getElementById('entrega').value) || 0;
+      const cambio = entrega - total;
+      const cambioElement = document.getElementById('cambio');
+      cambioElement.innerText = `$${cambio.toFixed(2)}`;
+      if (cambio < 0) { cambioElement.classList.add('text-red-500'); cambioElement.classList.remove('text-green-500'); }
+      else { cambioElement.classList.add('text-green-500'); cambioElement.classList.remove('text-red-500'); }
+    }
+    
+    function cerrarPopupError() {
+      document.getElementById('popupError').classList.add('hidden');
+    }
+    
+    function detectarIdsConEspacios() {
+      var input = document.getElementById('nuevoProducto');
+      input.addEventListener('input', function() {
+        if (this.value.indexOf(' ') !== -1) {
+          var tokens = this.value.trim().split(/\s+/);
+          this.value = '';
+          tokens.forEach(function(token) {
+            if (token) { document.getElementById('nuevoProducto').value = token; agregarProducto(); }
+          });
         }
-
-        function actualizarTotal() {
-            const filas = document.querySelectorAll('#productos tr');
-            let total = 0;
-
-            filas.forEach(function(fila) {
-                const precio = parseFloat(fila.querySelector('td:nth-child(4) input').value);
-                total += precio || 0;
-            });
-
-            document.getElementById('total').innerText = `$${total.toFixed(2)}`;
-            calcularCambio();
-        }
-
-        function calcularCambio() {
-            const total = parseFloat(document.getElementById('total').innerText.replace('$', '')) || 0;
-            const entrega = parseFloat(document.getElementById('entrega').value) || 0;
-            const cambio = entrega - total;
-
-            const cambioElement = document.getElementById('cambio');
-            cambioElement.innerText = `$${cambio.toFixed(2)}`;
-            if (cambio < 0) {
-                cambioElement.classList.add('text-danger');
-            } else {
-                cambioElement.classList.remove('text-danger');
-            }
-        }
-
-        window.onload = function() {
-            cargarClientes();
-        };
-    </script>
+      });
+    }
+    
+    window.onload = function() {
+      detectarIdsConEspacios();
+      cargarClientes();
+      google.script.run.withSuccessHandler(function(empleadas) {
+        var empleadaSelect = document.getElementById('empleada');
+        empleadaSelect.innerHTML = '';
+        empleadas.forEach(function(empleada) {
+          var option = document.createElement('option');
+          option.text = empleada;
+          empleadaSelect.add(option);
+        });
+      }).cargarEmpleadas();
+      google.script.run.withSuccessHandler(function() { actualizarFechaHora(); });
+      actualizarEstadoColor();
+    };
+    
+    window.toggleDarkMode = toggleDarkMode;
+    window.login = login;
+    window.logout = logout;
+    window.toggleSidebar = toggleSidebar;
+    window.agregarProducto = agregarProducto;
+    window.limpiar = limpiar;
+  </script>
 </body>
 </html>
